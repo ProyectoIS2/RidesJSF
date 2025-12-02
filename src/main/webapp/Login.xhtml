@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:head>
+        <title>Login</title>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="form-container">
+                <h2>Login</h2>
+                <h:messages globalOnly="true" layout="list" styleClass="message-container" />
+
+                <label for="email">Email:</label>
+                <h:inputText id="email" value="#{login.email}" required="true" requiredMessage="Fill email field">
+                    <f:ajax event="blur" render="mensajeemail"/>
+                </h:inputText>
+                <h:message id="mensajeemail" for="email" styleClass="error-message" />
+
+                <label for="password">Password:</label>
+                <h:inputSecret id="password" value="#{login.password}" required="true" requiredMessage="Fill password field">
+                    <f:ajax event="blur" render="mensajepassword"/>
+                </h:inputSecret>
+                <h:message id="mensajepassword" for="password" styleClass="error-message" />
+
+                <div class="button-container">
+                    <h:commandButton value="Login" action="#{login.login}" />
+                    <h:button value="Back" outcome="Index"/>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

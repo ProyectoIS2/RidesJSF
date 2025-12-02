@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+   <h:head>
+      <title>Create ride</title>
+      <h:outputStylesheet name="css/style.css" />
+   </h:head>
+   <h:body>
+      <div class="form-container">
+         <h2>Create Ride</h2>
+         <h:form>
+            <label for="origin">Depart city:</label>
+            <h:inputText id="origin" value="#{createRide.departCity}" required="true" validatorMessage="City name must contain 3 characters, begin with a capital letter and have no numbers or special characters" requiredMessage="This field must be filled">
+               <f:validateRegex pattern="^[A-ZÁÉÍÓÚÑ][a-zA-ZáéíóúñÁÉÍÓÚÑ]*(\s[a-zA-ZáéíóúñÁÉÍÓÚÑ]+)*$" />
+               <f:ajax event="blur" render="originMessage" />
+            </h:inputText>
+            <h:message id="originMessage" for="origin" styleClass="error-message" />
+
+            <label for="destination">Arrival city:</label>
+            <h:inputText id="destination" value="#{createRide.arrivalCity}" required="true" validatorMessage="City name must contain 3 characters, begin with a capital letter and have no numbers" requiredMessage="This field must be filled">
+               <f:validateRegex pattern="^[A-ZÁÉÍÓÚÑ][a-zA-ZáéíóúñÁÉÍÓÚÑ]*(\s[a-zA-ZáéíóúñÁÉÍÓÚÑ]+)*$" />
+               <f:ajax event="blur" render="destinationMessage" />
+            </h:inputText>
+            <h:message id="destinationMessage" for="destination" styleClass="error-message" />
+
+            <label for="price">Price:</label>
+            <h:inputText id="price" value="#{createRide.price}" required="true" validatorMessage="Price must be between 0 and 200" converterMessage="Price must be a number" requiredMessage="This field must be filled">
+               <f:ajax event="blur" render="priceMessage" />
+               <f:validateDoubleRange minimum="0" maximum="200"/>
+            </h:inputText>
+            <h:message id="priceMessage" for="price" styleClass="error-message" />
+
+            <label for="seats">Seats:</label>
+            <h:inputText id="seats" value="#{createRide.seats}" required="true" validatorMessage="Seats must be between 0 and 20" converterMessage="Seats must be an integer" requiredMessage="This field must be filled">
+               <f:ajax event="blur" render="seatsMessage" />
+               <f:validateLongRange minimum="1" maximum="20"/>
+            </h:inputText>
+            <h:message id="seatsMessage" for="seats" styleClass="error-message" />
+
+            <label for="rideDate">Ride date:</label>
+            <p:calendar id="rideDate" value="#{createRide.rideDate}" navigator="true" required="true" pattern="dd/MM/yyyy" mode="inline" />
+
+            <div class="button-container">
+               <h:commandButton id="createRide" value="Create ride" action="#{createRide.createRide}" />
+               <h:button value="Back" outcome="back" />
+            </div>
+         </h:form>
+         <h:messages globalOnly="true" layout="list" styleClass="message-container" />
+      </div>
+   </h:body>
+</f:view>
+</html>

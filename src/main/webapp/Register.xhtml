@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:head>
+        <title>Register</title>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="form-container">
+                <h2>Register</h2>
+                <h:messages globalOnly="true" layout="list" styleClass="message-container" />
+
+                <label for="email">Email:</label>
+                <h:inputText id="email" value="#{register.email}" required="true" requiredMessage="Fill email field" validatorMessage="Email does not have the correct format">
+                    <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+                    <f:ajax event="blur" render="mensajeemail"/>
+                </h:inputText>
+                <h:message id="mensajeemail" for="email" styleClass="error-message" />
+
+                <label for="name">Name:</label>
+                <h:inputText id="name" value="#{register.name}" required="true" requiredMessage="Fill name field" validatorMessage="Name does not have the correct format">
+                    <f:validateRegex pattern="^[A-ZÁÉÍÓÚÑ][a-zA-ZáéíóúñÁÉÍÓÚÑ]*(\s[a-zA-ZáéíóúñÁÉÍÓÚÑ]+)*$" />
+                    <f:ajax event="blur" render="mensajename"/>
+                </h:inputText>
+                <h:message id="mensajename" for="name" styleClass="error-message" />
+
+                <label for="password">Password:</label>
+                <h:inputSecret id="password" value="#{register.password}" required="true" requiredMessage="Fill password field" validatorMessage="Password must be at least 6 characters long and include at least one uppercase letter.">
+                    <f:validateRegex pattern="^(?=.*[A-Z]).{6,}$" />
+                    <f:ajax event="blur" render="mensajepassword"/>
+                </h:inputSecret>
+                <h:message id="mensajepassword" for="password" styleClass="error-message" />
+
+                <div class="button-container">
+                    <h:commandButton value="Register" action="#{register.register}" />
+                    <h:button value="Back" outcome="Index"/>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

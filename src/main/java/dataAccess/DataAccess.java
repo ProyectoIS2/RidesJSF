@@ -80,9 +80,9 @@ public class DataAccess  {
 	    
 		   
 		    //Create drivers 
-			Driver driver1=new Driver("driver1@gmail.com","Aitor Fernandez");
-			Driver driver2=new Driver("driver2@gmail.com","Ane Gaztañaga");
-			Driver driver3=new Driver("driver3@gmail.com","Test driver");
+			Driver driver1=new Driver("driver1@gmail.com","Aitor Fernandez", "123qwerty");
+			Driver driver2=new Driver("driver2@gmail.com","Ane Gaztañaga", "123qwerty");
+			Driver driver3=new Driver("driver3@gmail.com","Test driver", "123qwerty");
 
 			
 			//Create rides

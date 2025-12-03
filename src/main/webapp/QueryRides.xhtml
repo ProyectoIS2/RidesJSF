@@ -9,39 +9,51 @@
         <h:outputStylesheet name="css/style.css" />
     </h:head>
     <h:body>
+        
         <div class="form-container">
             <h2>Query ride</h2>
             <h:messages globalOnly="true" layout="list" styleClass="message-container" />
-            <h:form>
+            
+            <h:form id="formularioBusqueda">
+                
                 <label for="departCity">Depart city:</label>
                 <p:selectOneMenu id="departCity" value="#{queryRides.departCity}">
                     <f:selectItems value="#{queryRides.departCities}" />
-                    <p:ajax event="change" listener="#{queryRides.departCitySelected}" update="destinationCity, foundRides"/>
+                    <p:ajax event="change" listener="#{queryRides.departCitySelected}" 
+                            process="@this"
+                            update="destinationCity"/>
                 </p:selectOneMenu>
 
                 <label for="destinationCity">Destination city:</label>
                 <p:selectOneMenu id="destinationCity" value="#{queryRides.destinationCity}">
                     <f:selectItems value="#{queryRides.destinationCities}" />
-                    <p:ajax event="change" listener="#{queryRides.destinationCitySelected}" update="foundRides"/>
                 </p:selectOneMenu>
 
                 <label for="rideDate">Ride date:</label>
-                <p:calendar id="rideDate" value="#{queryRides.rideDate}" navigator="true" required="true" pattern="dd/MM/yyyy" mode="inline">
-                    <p:ajax event="dateSelect" listener="#{queryRides.rideDateSelected}" update="foundRides"/>
-                </p:calendar>
+                <p:calendar id="rideDate" value="#{queryRides.rideDate}" navigator="true" pattern="dd/MM/yyyy" mode="inline" />
+                
                 <div class="button-container">
-                    <h:button value="Back" outcome="back" />
+                    <p:commandButton value="Search" action="#{queryRides.doSearch}" 
+                                     process="@form" 
+                                     update=":formularioTabla:foundRides"
+                                     styleClass="ui-button" />
+
+                    <h:button value="Back" outcome="DriverMenu" />
                 </div>
-        </h:form>
+            </h:form>
         </div>
+
         <div class="form-container">
             <h2>Found rides:</h2>
-            <p:dataTable id="foundRides" value="#{queryRides.foundRides}" var="item" border="1" emptyMessage="Select a date with rides.">
-                <p:column headerText="Driver">#{item.driver.email}</p:column>
-                <p:column headerText="Seats">#{item.nPlaces}</p:column>
-                <p:column headerText="Price">#{item.price}</p:column>
-            </p:dataTable>
+            <h:form id="formularioTabla">
+                <p:dataTable id="foundRides" value="#{queryRides.foundRides}" var="item" border="1" emptyMessage="Select filters and press Search.">
+                    <p:column headerText="Driver">#{item.driver.name}</p:column>
+                    <p:column headerText="Seats">#{item.nPlaces}</p:column>
+                    <p:column headerText="Price">#{item.price}</p:column>
+                </p:dataTable>
+            </h:form>
         </div>
+
     </h:body>
 </f:view>
 </html>

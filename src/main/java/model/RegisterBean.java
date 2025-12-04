@@ -21,14 +21,12 @@ public class RegisterBean implements Serializable {
     private String name;
     private String password;
 
-    // --- Inyección del Almacén de Datos ---
     @Inject
     private BLFacade facade;
 
     public RegisterBean() {
     }
 
-    // Método de Acción (El que llama el botón) ---
     public String register() {
         try {
             // Verificar si el facade está funcionando

@@ -1,0 +1,120 @@
+/* --- RESET BÁSICO --- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Verdana', sans-serif;
+    /* CAMBIO: Fondo blanco limpio en lugar del degradado morado */
+    background-color: #ffffff; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* --- TARJETA DEL FORMULARIO --- */
+.form-container {
+    background: #ffffff;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px; 
+    /* CAMBIO: Sombra más suave y un borde fino para que destaque sobre el fondo blanco */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+    border: 1px solid #f0f0f0;
+    margin: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-weight: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+/* --- ESTILO DE INPUTS: SOLO LÍNEA --- */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #666; /* Gris un poco más oscuro para mejor lectura sobre blanco */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 2px solid #ddd; /* Línea gris */
+    border-radius: 0;
+    background-color: transparent;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    color: #333;
+}
+
+/* --- BOTONES --- */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+button, 
+input[type="submit"], 
+.ui-button {
+    width: 100%;
+    padding: 15px;
+    /* Mantenemos el botón con color para que destaque, pero más sobrio */
+    background: #667eea; 
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+button:hover, 
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    background: #5a67d8; /* Un poco más oscuro al pasar el ratón */
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* --- MENSAJES --- */
+.error-message {
+    color: #e53e3e;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.message-container {
+    text-align: center;
+    color: #d69e2e;
+    font-size: 0.9rem;
+    list-style: none;
+    padding: 0;
+}
+
+/* Ajuste para Primefaces */
+.ui-inputfield {
+    box-shadow: none !important;
+}

@@ -9,11 +9,12 @@ import jakarta.faces.context.FacesContext;
 
 // Importamos tus clases
 import domain.Driver;
+import businessLogic.BLFacade;
 
 @Named("register") // Esto permite usar #{register.email} en el XHTML
 @RequestScoped
 public class RegisterBean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     private String email;
@@ -21,9 +22,8 @@ public class RegisterBean implements Serializable {
     private String password;
 
     // --- Inyección del Almacén de Datos ---
-    // Esto busca la clase DataService (@ApplicationScoped) automáticamente
     @Inject
-    private DataService dataService;
+    private BLFacade facade;
 
     public RegisterBean() {
     }
@@ -31,31 +31,30 @@ public class RegisterBean implements Serializable {
     // Método de Acción (El que llama el botón) ---
     public String register() {
         try {
-            // Verificar si el DataService está funcionando
-            if (dataService == null) {
-                System.out.println("ERROR CRÍTICO: DataService es null. Revisa que DataService tenga @Named y @ApplicationScoped");
+            // Verificar si el facade está funcionando
+            if (facade == null) {
+                System.out.println("ERROR CRÍTICO: BLFacade es null.");
                 addMessage(FacesMessage.SEVERITY_ERROR, "Error interno del servidor.");
                 return null;
             }
 
             // Comprobar si el usuario ya existe
-            if (dataService.existeUsuario(this.email)) {
+            Driver driverExistente = facade.getDriver(this.email);
+            if (driverExistente != null) {
                 addMessage(FacesMessage.SEVERITY_ERROR, "Error: Este email ya está registrado.");
                 return null;
             }
 
-            // Crear el objeto Driver (Usando el constructor de 3 parámetros)
             Driver nuevoConductor = new Driver(this.email, this.name, this.password);
-            
-            // Guardar en el almacén compartido (la base de datos simulada)
-            dataService.guardarUsuario(nuevoConductor);
-            
+
+            facade.createDriver(this.email, this.name, this.password);
+
             System.out.println("DEBUG: Usuario registrado -> " + nuevoConductor.getEmail());
 
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             addMessage(FacesMessage.SEVERITY_INFO, "Registro correcto. Inicia sesión.");
 
-            // 6. Redirigir al Login
+            // Redirigir al Login
             return "Login?faces-redirect=true";
 
         } catch (Exception e) {

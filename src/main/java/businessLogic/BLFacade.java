@@ -77,5 +77,7 @@ public interface BLFacade  {
 	
 	public Driver getDriver(String email);
 
-	
+	@WebMethod
+	public void createDriver(String email, String name, String password);
+
 }

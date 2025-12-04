@@ -26,7 +26,7 @@ public class Driver implements Serializable {
 	private String name; 
 	private String password;
 	@XmlIDREF
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private List<Ride> rides=new Vector<Ride>();
 
 	public Driver() {

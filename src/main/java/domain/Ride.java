@@ -16,16 +16,22 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Entity
 public class Ride implements Serializable {
 	@XmlID
-	@Id 
+	@Id
 	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
 	private Integer rideNumber;
+
+	@Column(name = "origin")
 	private String from;
+
+	@Column(name = "destination")
 	private String to;
+
 	private int nPlaces;
 	private Date date;
 	private float price;
-	
+
+	@ManyToOne
 	private Driver driver;  
 	
 	public Ride(){

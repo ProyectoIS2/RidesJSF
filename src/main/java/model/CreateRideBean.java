@@ -11,6 +11,7 @@ import jakarta.faces.context.FacesContext;
 
 import domain.Driver;
 import domain.Ride;
+import businessLogic.BLFacade;
 
 
 @Named("createRide") // para q coincida con #{createRide...} del XHTML
@@ -26,12 +27,13 @@ public class CreateRideBean implements Serializable {
     private Date rideDate; 
     
     @Inject
-    private DataService dataService; //despues cambiarlo para lo del hibernate
+    private BLFacade facade;
 
     @Inject
     private LoginBean loginBean;
 
     public CreateRideBean() {
+
     }
 
     public String createRide() {
@@ -54,15 +56,11 @@ public class CreateRideBean implements Serializable {
                 return null;
             }
             
-            //el conductorActual.addRide puede ir sin guardarse en una variable, pero se queda así porque me funciona y no quiero jugarmela jeje
-            Ride nuevoViaje = conductorActual.addRide(departCity, arrivalCity, rideDate, seats, price);
-
-            // Como hemos modificado la lista de viajes del conductor, avisamos al dataservice
-            dataService.guardarUsuario(conductorActual);
-
+            facade.createRide(departCity, arrivalCity, rideDate, seats, price, conductorActual.getEmail());
+            
             System.out.println("Viaje creado: " + departCity + " -> " + arrivalCity + " por " + conductorActual.getName());
 
-            // 5. Mensaje de éxito
+            //mensaje de éxito
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             addMessage(FacesMessage.SEVERITY_INFO, "Viaje creado correctamente.");
 

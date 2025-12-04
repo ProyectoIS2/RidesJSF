@@ -86,32 +86,26 @@ public class Driver implements Serializable {
 		
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Driver other = (Driver) obj;
-		if (email != other.email)
-			return false;
-		return true;
+	    if (this == obj) return true;
+	    if (obj == null) return false;
+	    if (getClass() != obj.getClass()) return false;
+	    Driver other = (Driver) obj;
+	    if (email == null) {
+	        if (other.email != null) return false;
+	    } else if (!email.equals(other.email))
+	        return false;
+	    return true;
 	}
 
 	public Ride removeRide(String from, String to, Date date) {
-		boolean found=false;
-		int index=0;
-		Ride r=null;
-		while (!found && index<=rides.size()) {
-			r=rides.get(++index);
-			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
-			found=true;
-		}
-			
-		if (found) {
-			rides.remove(index);
-			return r;
-		} else return null;
+	    for (int i = 0; i < rides.size(); i++) {
+	        Ride r = rides.get(i);
+	        if (r.getFrom().equals(from) && r.getTo().equals(to) && r.getDate().equals(date)) {
+	            rides.remove(i);
+	            return r;
+	        }
+	    }
+	    return null;
 	}
 	public List<Ride> getRides(){
 		return rides;

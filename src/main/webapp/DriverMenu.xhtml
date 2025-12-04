@@ -10,14 +10,17 @@
    </h:head>
    <h:body>
       <div class="form-container">
-         <h2>Driver menu</h2>
-         <h3>Logged in as #{driverMenu.loggedInDriver}</h3>
-         <div class="button-container">
-            <h:button value="Create ride" outcome="createRide" styleClass="button"/>
-            <h:button value="Query rides" outcome="queryRides" styleClass="button"/>
-            <h:button value="My rides" outcome="myRides" styleClass="button"/>
-            <h:button value="Logout" outcome="index" styleClass="button"/>
-         </div>
+         <h:form> <h2>Driver menu</h2>
+             
+             <h3>Logged in as #{login.driverLogeado.name}</h3>
+             
+             <div class="button-container">
+                <h:button value="Create ride" outcome="CreateRide" styleClass="button"/>
+                <h:button value="Query rides" outcome="QueryRides" styleClass="button"/>
+                <h:commandButton value="Logout" action="#{login.logout}" styleClass="button"/>
+             </div>
+             
+         </h:form>
       </div>
    </h:body>
 </f:view>

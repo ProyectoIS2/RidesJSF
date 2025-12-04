@@ -1,4 +1,4 @@
-package model; // O tu paquete model
+package model; // O el paquete donde lo tengas (bean o model)
 
 import java.io.Serializable;
 import jakarta.enterprise.context.SessionScoped;
@@ -6,44 +6,49 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.application.FacesMessage;
+
 import domain.Driver;
+import businessLogic.BLFacade; // Importamos la interfaz
 
 @Named("login")
 @SessionScoped
 public class LoginBean implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     
     private String email;
     private String password;
     
+
     @Inject
-    private DataService dataService;
+    private BLFacade facade; 
     
-    // Variable para guardar quién está conectado
     private Driver driverLogeado = null; 
 
     public LoginBean() {
     }
 
+    public String login() {        
+        try {
+            Driver driverEncontrado = facade.getDriver(email);
 
-    public String login() {       
-        Driver driverEncontrado = null;
-   //     if ("test@test.com".equals(email)) {
-   //          driverEncontrado = new Driver("test@test.com", "Test User", "123");
-   //      }
-        if (dataService.existeUsuario(email)!= false) {
-        	driverEncontrado = dataService.buscarUsuario(email);
-        }
-        else {
-        	return null;
-        }
-
-        if (driverEncontrado != null && driverEncontrado.getPassword().equals(this.password)) {
-            this.driverLogeado = driverEncontrado;
-            return "DriverMenu?faces-redirect=true";
-        } else {
+            if (driverEncontrado != null && driverEncontrado.getPassword().equals(this.password)) {
+                
+                this.driverLogeado = driverEncontrado;
+                System.out.println("Login correcto: " + driverLogeado.getName());
+                
+                return "DriverMenu?faces-redirect=true";
+                
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Email o contraseña incorrectos"));
+                return null; 
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Email o contraseña incorrectos"));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error interno"));
             return null;
         }
     }

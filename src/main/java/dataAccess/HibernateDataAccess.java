@@ -135,4 +135,18 @@ public class HibernateDataAccess {
             db.close();
         }
     }
+    public List<Ride> getRidesByDriver(String driverEmail) {
+        EntityManager db = JPAUtil.createEntityManager();
+        TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.driver.email = :email", Ride.class);
+        query.setParameter("email", driverEmail);
+        return query.getResultList();
+    }
+    
+    public List<Ride> getCheaperRides(double limit) { 
+        EntityManager db = JPAUtil.createEntityManager();
+        TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.price <= :limit", Ride.class);
+        query.setParameter("limit", (float) limit);
+        
+        return query.getResultList();
+    }
 }

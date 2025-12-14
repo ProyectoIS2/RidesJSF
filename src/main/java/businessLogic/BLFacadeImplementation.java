@@ -84,4 +84,16 @@ public class BLFacadeImplementation implements BLFacade {
     public void createDriver(String email, String name, String password) {
         dbManager.createDriver(email, name, password);
     }
+    
+
+    @WebMethod
+    public List<Ride> getRidesByDriver(Driver driver) {
+    	String driverMail = driver.getEmail();
+        return dbManager.getRidesByDriver(driverMail);
+    }
+    
+    @WebMethod
+    public List<Ride> getCheaperRides(double money) {
+        return dbManager.getCheaperRides(money);
+    }
 }

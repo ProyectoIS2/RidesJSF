@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <title>Cheap Rides</title>
+        <h:outputStylesheet name="css/style.css" />
+    </h:head>
+    <h:body>
+        <h:form>
+            <div class="form-container" style="max-width: 1200px; width: 95%;">
+                
+                <h2>Find Cheap Rides</h2>
+                <p:growl id="msgs" showDetail="false" />
+
+                <div style="margin-bottom: 20px; display: flex; align-items: flex-end; gap: 10px;">
+                    <div style="flex-grow: 1;">
+                        <label for="price">Precio Máximo (€):</label>
+                        <p:inputNumber id="price" value="#{cheapRides.priceLimit}" 
+                                       decimalPlaces="1" required="true"/>
+                    </div>
+                    <div>
+                        <p:commandButton value="Buscar" action="#{cheapRides.search}" 
+                                         update="ridesTable msgs" 
+                                         styleClass="ui-button" icon="pi pi-search"/>
+                    </div>
+                </div>
+
+                <p:dataTable id="ridesTable" value="#{cheapRides.cheapRides}" var="ride" 
+                             border="1" emptyMessage="Introduce un precio para ver ofertas.">
+                    
+                    <p:column headerText="Depart city">#{ride.from}</p:column>
+                    <p:column headerText="Arrival city">#{ride.to}</p:column>
+                    
+                    <p:column headerText="Date">
+                         <h:outputText value="#{ride.date}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Seats">#{ride.nPlaces}</p:column>
+                    
+                    <p:column headerText="Price" sortBy="#{ride.price}">
+                        <h:outputText value="#{ride.price} €" style="font-weight: bold; color: green;"/>
+                    </p:column>
+                    
+					<p:column headerText="Driver">#{ride.driver.name}</p:column>                    
+                </p:dataTable>
+                
+                <br/>
+                <div class="button-container">
+                    <h:button style="max-width: 200px" value="Back" outcome="DriverMenu" />
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

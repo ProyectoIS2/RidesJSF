@@ -79,5 +79,11 @@ public interface BLFacade  {
 
 	@WebMethod
 	public void createDriver(String email, String name, String password);
+	
+	@WebMethod
+	public List<Ride> getRidesByDriver(Driver driver);
+	
+	@WebMethod
+	public List<Ride> getCheaperRides(double Money);
 
 }

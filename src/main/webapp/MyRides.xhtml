@@ -10,8 +10,7 @@
     </h:head>
     <h:body>
         <h:form>
-            <div class="form-container">
-                <h2>My rides:</h2>
+			<div class="form-container" style="max-width: 800px; width: 95%;">                <h2>My rides:</h2>
                 <p:dataTable id="Myrides" value="#{myRides.myRides}" var="ride" border="1" emptyMessage="You do not have any rides.">
                     <p:column headerText="Depart city">#{ride.from}</p:column>
                     <p:column headerText="Arrival city">#{ride.to}</p:column>
